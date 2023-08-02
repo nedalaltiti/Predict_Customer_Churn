@@ -5,16 +5,27 @@ The first project of the Machine Learning DevOps Engineer Nanodegree focuses on 
 ## Project Description
 The first project of the Machine Learning DevOps Engineer Nanodegree focuses on developing production-ready clean code using industry best practices. The project's main objective is to predict customer churn for banking customers (Binary Classification Task).
 To achieve this, the project proposes the following approach:
+
 •	Perform exploratory data analysis (EDA) to gain insights into the dataset and understand the patterns and relationships within the data.
+
 •	Conduct feature engineering to transform and preprocess the data, including handling missing values, encoding categorical variables, and scaling numerical features.
+
 •	Split the dataset into training and testing sets to evaluate the performance of the machine learning models accurately.
+
 •	Train multiple classification models using various algorithms such as logistic regression, decision trees, random forests, or gradient boosting.
+
 •	Evaluate the performance of the trained models using appropriate evaluation metrics such as accuracy, precision, recall, and F1-score.
+
 •	Select the best-performing model based on the evaluation results and fine-tune its hyperparameters using techniques like grid search or random search.
+
 •	Once the final model is selected, use it to make predictions on new, unseen data to identify customers who are likely to churn.
+
 •	Save the trained model using the joblib library and store it in a .pkl file for future use.
+
 •	Generate visualizations and plots to analyze the results, such as ROC curves, feature importances, and other relevant insights.
+
 •	Implement logging and testing to ensure the code's functionality and track any errors or issues that may arise during execution.
+
 •	Document the entire project, including the purpose, methodology, code structure, and instructions for running the code and reproducing the results.
 
 ## Files and data description
@@ -35,6 +46,7 @@ The pytest python package was used to test the churn_library.py project script. 
 
 
 ##Model Evaluation
+
 Random Forest vs Logistic Regression
 
 ![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/0f0cec3f-5631-49d9-b625-bd19fdb61384)
