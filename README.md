@@ -1,4 +1,4 @@
-![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/aa073f6a-6de3-459f-839b-c4fd4dac3341)# Predict Customer Churn
+# Predict Customer Churn
 
 - Project **Predict Customer Churn** of ML DevOps Engineer Nanodegree Udacity
 The first project of the Machine Learning DevOps Engineer Nanodegree focuses on developing production-ready clean code using industry best practices. The project's main objective is to predict customer churn for banking customers, which involves solving a classification problem.
@@ -35,10 +35,17 @@ The pytest python package was used to test the churn_library.py project script. 
 
 
 ##Model Evaluation
-
+Random Forest vs Logistic Regression
 ![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/0f0cec3f-5631-49d9-b625-bd19fdb61384)
 
+Random Forest Confusion Matrix
+![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/66554330-35e3-445d-ad42-346bedfb37c2)
 
+Logistic Regression Confusion Matrix 
+![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/41141256-c6ff-4be4-aea9-fb77ddc975b2)
+
+Important Features
+![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/3ccb4569-49cf-4ea1-af66-19e6b2bec9d1)
 
 
 
