@@ -1,4 +1,4 @@
-# Predict Customer Churn
+![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/aa073f6a-6de3-459f-839b-c4fd4dac3341)# Predict Customer Churn
 
 - Project **Predict Customer Churn** of ML DevOps Engineer Nanodegree Udacity
 The first project of the Machine Learning DevOps Engineer Nanodegree focuses on developing production-ready clean code using industry best practices. The project's main objective is to predict customer churn for banking customers, which involves solving a classification problem.
@@ -28,7 +28,17 @@ churn.png: This is an image file that shows a visualization of the churn rate in
 
 README.md: This is a markdown file that provides a brief description of the project, including instructions on how to run the script and interpret the results.
 ## Running Files
-How do you run your files? What should happen when you run your files?
+I used Python version 3.10.11
+The required packages are provided in the requirements.txt file
+To run the project, execute the script python churn_library.py from the project folder
+The pytest python package was used to test the churn_library.py project script. To execute the unit tests, you can simply run the pytest command from the main project folder in the command line. As a result of running the tests, the project functions will be automatically tested, and a log file will be generated in the logs folder.
+
+
+##Model Evaluation
+
+![image](https://github.com/nedalaltiti/Predict_Customer_Churn/assets/106015333/0f0cec3f-5631-49d9-b625-bd19fdb61384)
+
+
 
 
 
