@@ -222,7 +222,7 @@ def feature_importance_plot(model, X_data, model_name, output_pth):
             output_pth: path to store the figure
 
     output:
-             None
+             important features
     '''
     # Calculate feature importances
     importances = model.feature_importances_
@@ -261,7 +261,7 @@ def train_models(X_train, X_test, y_train, y_test):
               y_train: y training data
               y_test: y testing data
     output:
-              None
+              ROC curve for rf and lr models
     '''
     rfc = RandomForestClassifier(random_state=42)
     lrc = LogisticRegression(solver='lbfgs', max_iter=3000)
@@ -330,6 +330,14 @@ def train_models(X_train, X_test, y_train, y_test):
                             "./images/results")
 
     def plot_confusion_matrix(cm, classes, title='Confusion Matrix'):
+        '''
+    plot confusionmatrix for rf and lr models on test dataset
+    input:
+              confusion matrix
+              classes : Churn or Not Churn
+    output:
+              Confusion Matrix plot for both rf and lr models
+    '''
         plt.imshow(cm, interpolation='nearest', cmap='viridis')
         plt.title(title)
         plt.colorbar()
