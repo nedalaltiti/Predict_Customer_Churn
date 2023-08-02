@@ -45,7 +45,7 @@ To run the project, execute the script python churn_library.py from the project 
 The pytest python package was used to test the churn_library.py project script. To execute the unit tests, you can simply run the pytest command from the main project folder in the command line. As a result of running the tests, the project functions will be automatically tested, and a log file will be generated in the logs folder.
 
 
-##Model Evaluation
+## Model Evaluation
 
 Random Forest vs Logistic Regression
 
