@@ -1,8 +1,7 @@
 '''
 Testing for Churn_library python script file
 Author: Nedal Altiti
-Date 02/08/23
-
+Date 02 / 08 / 23
 '''
 
 import logging
