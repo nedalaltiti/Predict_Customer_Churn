@@ -1,11 +1,12 @@
 '''
 Testing for Churn_library python script file
 Author: Nedal Altiti
-Date 02 / 08 / 23
-'''
+Date 02/08/23
 
+'''
+import os
 import logging
-import pytest
+from math import ceil
 import churn_library as cls
 
 
@@ -16,85 +17,23 @@ logging.basicConfig(
     format='%(name)s - %(levelname)s - %(message)s')
 
 
-@pytest.fixture(scope="module")
-def path():
-    """
-    Fixture - The test function test_import() will
-    use the return of path() as an argument
-    """
-    return "./data/bank_data.csv"
-
-
-@pytest.fixture(scope="module")
-def dataframe(input_path):
-    """
-    Fixture - The test functions will
-    use the return of dataframe() as an argument
-    """
-    return cls.import_data(input_path)
-
-
-@pytest.fixture(scope="module",
-                params=[['Gender',
-                         'Education_Level',
-                         'Marital_Status',
-                         'Income_Category',
-                         'Card_Category'],
-                        ['Gender',
-                         'Education_Level',
-                         'Marital_Status',
-                         'Income_Category'],
-                        ])
-def encoder_params(request):
-    """
-    Fixture - The test function test_encoder_helper will
-    use the parameters returned by encoder_params() as arguments
-    """
-    cat_features = request.param
-    # get dataset from pytest Namespace
-    data = pytest.df.copy()
-    return data, cat_features
-
-
-@pytest.fixture(scope="module")
-def input_train():
-    """
-    Fixture - The test function test_train_models will
-    use the datasets returned by input_train() as arguments
-    """
-    # get dataset from pytest Namespace
-    data = pytest.df.copy()
-    return cls.perform_feature_engineering(data)
-
-
-@pytest.mark.parametrize("filename",
-                         ["./data/bank_data.csv",
-                          "./data/no_file.csv"])
-######################### UNIT TESTS ##################################
-def test_import(filename):
+def test_import():
     '''
-    test data import - this example is completed for you to assist with the
-    other test functions
+    test data import - this example is completed for you to assist with the other test functions
     '''
     try:
-        data = cls.import_data(filename)
-        logging.info("Testing import_data from file: %s - SUCCESS", filename)
-
-        # store dataframe into pytest namespace for re-use in other test
-        # functions
-        pytest.df = data
-
-    except FileNotFoundError:
-        logging.error(
-            "Testing import_data from file: %s: The file wasn't found",
-            filename)
+        df = cls.import_data("./data/bank_data.csv")
+        logging.info("Testing import_data: SUCCESS")
+    except FileNotFoundError as err:
+        logging.error("Testing import_eda: The file wasn't found")
+        raise err
 
     try:
-        assert data.shape[0] > 0
-        assert data.shape[1] > 0
-        logging.info("Returned dataframe with shape: %s", data.shape)
+        assert df.shape[0] > 0
+        assert df.shape[1] > 0
     except AssertionError as err:
-        logging.error("The file doesn't appear to have rows and columns")
+        logging.error(
+            "Testing import_data: The file doesn't appear to have rows and columns")
         raise err
 
 
@@ -102,85 +41,181 @@ def test_eda():
     '''
     test perform eda function
     '''
-    # get dataset from pytest Namespace
-    data = pytest.df
-
+    df = cls.import_data("./data/bank_data.csv")
     try:
-        cls.perform_eda(data)
-        logging.info("Testing perform_eda - SUCCESS")
+        cls.perform_eda(df=df)
+        logging.info("Testing perform_eda: SUCCESS")
+    except KeyError as err:
+        logging.error('Perform EDA function error')
+        raise err
 
-    except Exception as err:
-        logging.error("Testing perform_eda failed - Error type %s", type(err))
+    # Assert if `churn_dist.png` is created
+    try:
+        assert os.path.isfile("./images/eda/churn_dist.png") is True
+        logging.info('File %s was found', 'churn_dist.png')
+    except AssertionError as err:
+        logging.error('File %s not found', 'churn_distribution.png')
+        raise err
+
+    # Assert if `customer_age_dist.png` is created
+    try:
+        assert os.path.isfile(
+            "./images/eda/customer_age_dist.png") is True
+        logging.info('File %s was found', 'customer_age_dist.png')
+    except AssertionError as err:
+        logging.error('File %s not found', 'customer_age_dist.png')
+        raise err
+
+    # Assert if `marital_status_dist.png` is created
+    try:
+        assert os.path.isfile(
+            "./images/eda/marital_status_dist.png") is True
+        logging.info('File %s was found', 'marital_status_dist.png')
+    except AssertionError as err:
+        logging.error('File %s not found', 'marital_status_dist.png')
+        raise err
+
+    # Assert if `total_transaction_dist.png` is created
+    try:
+        assert os.path.isfile(
+            "./images/eda/total_transaction_dist.png") is True
+        logging.info('File %s was found', 'total_transaction_dist.png')
+    except AssertionError as err:
+        logging.error(
+            'File %s not found',
+            'total_transaction_dist.png')
+        raise err
+
+    # Assert if `heatmap.png` is created
+    try:
+        assert os.path.isfile("./images/eda/heatmap.png") is True
+        logging.info('File %s was found', 'heatmap.png')
+    except AssertionError as err:
+        logging.error('File %s not found', 'heatmap.png')
+        raise err
 
 
-def test_encoder_helper(params):
+def test_encoder_helper():
     '''
     test encoder helper
     '''
-    data, cat_features = params
+    # Load DataFrame
+    dataframe = cls.import_data("./data/bank_data.csv")
 
+    # Categorical Features
+    cat_columns = [
+        'Gender', 'Education_Level',
+        'Marital_Status', 'Income_Category',
+        'Card_Category']
     try:
-        newdf = cls.encoder_helper(data, cat_features)
-        logging.info("Testing encoder_helper with %s - SUCCESS", cat_features)
+        _ = cls.encoder_helper(
+            df=dataframe,
+            category_lst=cat_columns,
+            response="Churn"
+        )
+        logging.info("Testing encoder_helper: SUCCESS")
+    except AssertionError as err:
+        logging.error("Testing encoder_helper: ERROR")
 
-    except Exception as err:
-        logging.error(
-            "Testing encoder_helper failed - Error type %s",
-            type(err))
-
-    try:
-        assert newdf.select_dtypes(include='object').columns.tolist() == []
-        logging.info("All categorical columns were encoded")
-    except AssertionError:
-        logging.error(
-            "At least one categorical columns was NOT encoded" +
-            "- Check categorical features submitted")
+        raise err
 
 
 def test_perform_feature_engineering():
     '''
     test perform_feature_engineering
     '''
+# Load the DataFrame
+    dataframe = cls.import_data("./data/bank_data.csv")
     try:
-        data = pytest.df
-        X_train_test, X_test_test, y_train_test, y_test_test = cls.perform_feature_engineering(
-            data)
-        logging.info("Testing perform_feature_engineering - SUCCESS")
-
-    except Exception as err:
+        (_, x_test, _, _) = cls.perform_feature_engineering(
+            df=dataframe,
+            response='Churn'
+        )
+        logging.info("Testing perform_feature_engineering: SUCCESS")
+    except KeyError as err:
         logging.error(
-            "Testing perform_feature_engineering failed - Error type %s",
-            type(err))
+            'The `Churn` column is not present in the DataFrame: ERROR')
+        raise err
 
     try:
-        assert X_train_test.shape[0] > 0
-        assert X_train_test.shape[1] > 0
-        assert X_test_test.shape[0] > 0
-        assert X_test_test.shape[1] > 0
-        assert y_train_test.shape[0] > 0
-        assert y_test_test.shape[0] > 0
+        # x_test size should be 30% of `data_frame`
+        assert (
+            x_test.shape[0] == ceil(
+                dataframe.shape[0] *
+                0.3)) is True   # pylint: disable=E1101
         logging.info(
-            "perform_feature_engineering returned Train / Test set of shape %s %s",
-            X_train_test.shape,
-            X_test_test.shape)
-
-    except AssertionError:
+            'Testing perform_feature_engineering. DataFrame sizes are consistent: SUCCESS')
+    except AssertionError as err:
         logging.error(
-            "Testing perform_feature_engineering failed - Error type: %s",
-            type(err))
+            'Testing perform_feature_engineering. DataFrame sizes are not correct: ERROR')
+        raise err
 
 
-def test_train_models(input_train_param):
+def test_train_models():
     '''
     test train_models
     '''
+    # Load the DataFrame
+    dataframe = cls.import_data("./data/bank_data.csv")
+
+    # Feature engineering
+    (x_train, x_test, y_train, y_test) = cls.perform_feature_engineering(
+        df=dataframe,
+        response='Churn')
+
+    # Assert if `logistic_model.pkl` file is present
     try:
-        cls.train_models(*input_train_param)
-        logging.info(
-            "Testing train_models with input: %s - SUCCESS",
-            input_train_param)
-    except Exception as err:
-        logging.error(
-            "Testing train_models with input: %s - Error type: %s",
-            input_train_param,
-            type(err))
+        cls.train_models(x_train, x_test, y_train, y_test)
+        logging.info('Testing train_models: SUCCESS')
+    except AssertionError as err:
+        logging.error('Testing train_models: ERROR')
+        raise err
+
+    # Assert if `rfc_model.pkl` file is present
+    try:
+        assert os.path.isfile("./models/rfc_model.pkl") is True
+        logging.info('File %s was found', 'rfc_model.pkl')
+    except AssertionError as err:
+        logging.error('Not such file on disk')
+        raise err
+
+    # Assert if `ROC_curves.png` file is present
+    try:
+        assert os.path.isfile('./images/results/ROC_curves.png') is True
+        logging.info('File %s was found', 'ROC_curves.png')
+    except AssertionError as err:
+        logging.error('Not such file on disk')
+        raise err
+
+    # Assert if `confusion_matrix_rf.png` file is present
+    try:
+        assert os.path.isfile('./images/results/confusion_matrix_rf.png') is True
+        logging.info('File %s was found', 'confusion_matrix_rf.png')
+    except AssertionError as err:
+        logging.error('Not such file on disk')
+        raise err
+
+    # Assert if `confusion_matrix_lr.png` file is present
+    try:
+        assert os.path.isfile('./images/results/confusion_matrix_lr.png') is True
+        logging.info('File %s was found', 'confusion_matrix_lr.png')
+    except AssertionError as err:
+        logging.error('Not such file on disk')
+        raise err
+
+    # Assert if `feature_importances_Random_Forest.png` file is present
+    try:
+        assert os.path.isfile(
+            './images/results/feature_importances_Random_Forest.png') is True
+        logging.info('File %s was found', 'feature_importances_Random_Forest.png')
+    except AssertionError as err:
+        logging.error('Not such file on disk')
+        raise err
+
+
+if __name__ == "__main__":
+    test_import()
+    test_eda()
+    test_encoder_helper()
+    test_perform_feature_engineering()
+    test_train_models()
