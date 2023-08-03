@@ -189,7 +189,8 @@ def test_train_models():
 
     # Assert if `confusion_matrix_rf.png` file is present
     try:
-        assert os.path.isfile('./images/results/confusion_matrix_rf.png') is True
+        assert os.path.isfile(
+            './images/results/confusion_matrix_rf.png') is True
         logging.info('File %s was found', 'confusion_matrix_rf.png')
     except AssertionError as err:
         logging.error('Not such file on disk')
@@ -197,7 +198,8 @@ def test_train_models():
 
     # Assert if `confusion_matrix_lr.png` file is present
     try:
-        assert os.path.isfile('./images/results/confusion_matrix_lr.png') is True
+        assert os.path.isfile(
+            './images/results/confusion_matrix_lr.png') is True
         logging.info('File %s was found', 'confusion_matrix_lr.png')
     except AssertionError as err:
         logging.error('Not such file on disk')
@@ -207,7 +209,9 @@ def test_train_models():
     try:
         assert os.path.isfile(
             './images/results/feature_importances_Random_Forest.png') is True
-        logging.info('File %s was found', 'feature_importances_Random_Forest.png')
+        logging.info(
+            'File %s was found',
+            'feature_importances_Random_Forest.png')
     except AssertionError as err:
         logging.error('Not such file on disk')
         raise err
